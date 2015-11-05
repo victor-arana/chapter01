@@ -11,27 +11,39 @@
 
 <body>
 	<h:form id="registrationForm">
-		<p:panel header="Registration Form" style="width: 500 px;">
+		<p:panel header="Registration Form" style="width: 800 px;">
 		<p:messages/>
-		<h:panelGrid columns="2">
-			<p:outputLabel value="UserName:"/>
-			<p:inputText id="userName" value="#{userController.registrationUser.username}" label="UserName"/>
+		<h:panelGrid columns="3">
+		
+			<p:outputLabel value="UserName:*"/>
+			<p:inputText id="userName" value="#{userController.registrationUser.username}" required="true" label="UserName">
+				<p:ajax event="keyup" update="userNameMsg"/>
+			</p:inputText>
+			<p:message id="userNameMsg" for="userName"/>
 			
 			<p:outputLabel value="Password:"/>
-			<p:inputText id="password" value="#{userController.registrationUser.password}" label="Password"/>
+			<p:password id="password" value="#{userController.registrationUser.password}" required="true" label="Password">
+				<f:validateLength minimum="4"/>
+				<p:ajax update="passwordMsg" event="keyup"/>				
+			</p:password>
+			<p:message id="passwordMsg" for="password"/>
 			
 			<p:outputLabel value="FirstName:"/>
-			<p:inputText id="firstName" value="#{userController.registrationUser.firstName}" label="FirstName"/>
+			<p:inputText id="firstName" value="#{userController.registrationUser.firstName}" required="true" label="FirstName"/>
+			<p:message id="firtNameMsg" for="firstName"/>
 			
 			<p:outputLabel value="LastName:"/>
-			<p:inputText id="lastName" value="#{userController.registrationUser.lastName}"/>						
+			<p:inputText id="lastName" value="#{userController.registrationUser.lastName}"/>
+			<p:message id="lastNameMsg" for="lastName"/>
 			
 			<p:outputLabel value="Email:"/>
 			<p:inputText id="email" value="#{userController.registrationUser.email}"/>
+			<p:message id="emailMsg" for="email"/>
 			
+			<p:outputLabel value=""/>			
+			<p:commandButton action="#{userController.register}" value="Register" update="registrationForm"/>
 			<p:outputLabel value=""/>
 			
-			<p:commandButton action="#{userController.register}" value="Register" update="registrationForm"/>
 		</h:panelGrid>
 		</p:panel>
 	</h:form>
