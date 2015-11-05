@@ -7,6 +7,25 @@
 
 <h:head>
 	<title>Registration</title>
+	<script type="text/javascript">
+		function validateEmail() 
+		{
+			var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+			var email = $.trim($(PrimeFaces.escapeClientId("registrationForm:email")).val());
+			if(email ==''){
+				$(PrimeFaces.escapeClientId("registrationForm:emailMsg")).text("");
+				$(PrimeFaces.escapeClientId("registrationForm:emailMsg")).attr("class", "");
+				return;
+			}
+			if( emailReg.test( email ) ) {
+			   $(PrimeFaces.escapeClientId("registrationForm:emailMsg")).text("Valid Email");		
+			   $(PrimeFaces.escapeClientId("registrationForm:emailMsg")).attr("class", "ui-messages-info ui-widget ui-corner-all ui-messages-info-summary");		   
+			} else {
+				$(PrimeFaces.escapeClientId("registrationForm:emailMsg")).text("Invalid Email");
+				$(PrimeFaces.escapeClientId("registrationForm:emailMsg")).attr("class", "ui-message-error ui-widget ui-corner-all ui-message-error-detail");
+		   }
+		}		
+	</script>	
 </h:head>
 
 <body>
@@ -37,7 +56,7 @@
 			<p:message id="lastNameMsg" for="lastName"/>
 			
 			<p:outputLabel value="Email:"/>
-			<p:inputText id="email" value="#{userController.registrationUser.email}"/>
+			<p:inputText id="email" value="#{userController.registrationUser.email}" onchange="validateEmail();"/>
 			<p:message id="emailMsg" for="email"/>
 			
 			<p:outputLabel value=""/>			
